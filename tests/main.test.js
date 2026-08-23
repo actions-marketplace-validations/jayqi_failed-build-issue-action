@@ -13,6 +13,9 @@ describe("Test run", () => {
     'label-name': "build failed",
     'title-template': "Failed build: {{workflow}}",
     'body-template': "Build failed on {{refName}}.",
+    // Both deliberately un-normalized, so the assertion below covers run() normalizing them
+    'label-color': "#CB2431",
+    'label-description': "  Build failed in CI  ",
   };
   const booleanInputs = {
     'create-label': true,
@@ -33,16 +36,16 @@ describe("Test run", () => {
 
     await run();
 
-    // Argument order matters: the signature ends in two adjacent booleans
-    // that are trivially transposable.
-    expect(newIssueOrCommentForLabel).toHaveBeenCalledWith(
-      "github_token_here",
-      "build failed",
-      "Failed build: {{workflow}}",
-      "Build failed on {{refName}}.",
-      true,
-      false,
-    );
+    expect(newIssueOrCommentForLabel).toHaveBeenCalledWith({
+      githubToken: "github_token_here",
+      labelName: "build failed",
+      titleTemplate: "Failed build: {{workflow}}",
+      bodyTemplate: "Build failed on {{refName}}.",
+      createLabel: true,
+      labelColor: "CB2431",
+      labelDescription: "Build failed in CI",
+      alwaysCreateNewIssue: false,
+    });
     expect(core.setOutput).toHaveBeenCalledWith('issue-number', 100);
     expect(core.setOutput).toHaveBeenCalledWith('html-url', testHtmlUrl);
     expect(core.setFailed).not.toHaveBeenCalled();
