@@ -3,14 +3,17 @@
 [![tests](https://github.com/drivendataorg/failed-build-issue-action/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/drivendataorg/failed-build-issue-action/actions/workflows/tests.yml) [![codecov](https://codecov.io/github/drivendataorg/failed-build-issue-action/branch/main/graph/badge.svg?token=LKAEGPVU4N)](https://codecov.io/github/drivendataorg/failed-build-issue-action)
 
 > [!IMPORTANT]
-> We've moved! This repository has transferred from jayqi/failed-build-issue-action to drivendataorg/failed-build-issue-action. Old references will continue to redirect but we recommend updating.
+> We've moved! This repository has transferred from **jayqi/failed-build-issue-action** to **drivendataorg/failed-build-issue-action**. Old references will continue to redirect but we recommend updating.
 
 This action makes it easy to notify maintainers of a GitHub Actions workflow failure via GitHub's issue tracker. By default, the action will find the latest open issue with the label `build failed` and add a comment. If no such issue is open, it will instead open a new issue.
 
 ## Basic usage
 
+> [!TIP]
+> GitHub [recommends](https://docs.github.com/en/actions/reference/security/secure-use#using-third-party-actions) always pinning third-party actions to a full-length commit SHA as a security best practice. 
+
 ```yml
-- uses: drivendataorg/failed-build-issue-action@v1.3.0
+- uses: drivendataorg/failed-build-issue-action@940568ce50eeef3f31a920614cefcc6102d2f930 # v1.3.0
 ```
 
 For available options, see [`action.yml`](./action.yml)
@@ -52,7 +55,7 @@ jobs:
         run: |
           bash run_tests.sh
       - name: Notify failed build
-        uses: drivendataorg/failed-build-issue-action@v1.3.0
+        uses: drivendataorg/failed-build-issue-action@940568ce50eeef3f31a920614cefcc6102d2f930 # v1.3.0
         if: failure() && github.event.pull_request == null
 ```
 
@@ -126,7 +129,7 @@ jobs:
     permissions:
       issues: write
     steps:
-      - uses: drivendataorg/failed-build-issue-action@v1.3.0
+      - uses: drivendataorg/failed-build-issue-action@940568ce50eeef3f31a920614cefcc6102d2f930 # v1.3.0
 ```
 
 ### Explanation
